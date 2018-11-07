@@ -16,7 +16,7 @@ def index():
         raise BadRequestError('Missing endpoint')
 
     image = base64.b64decode(body['data']) # byte array
-    endpoint = os.environ['ENDPOINT_NAME'] 
+    endpoint = os.environ['ENDPOINT_NAME']
 
     if 'topk' not in body:
         topk = 257
@@ -25,7 +25,7 @@ def index():
 
     print("%s %d" % (endpoint, topk))
 
-    runtime = boto3.Session().client(service_name='sagemaker-runtime', region_name='us-east-1')
+    runtime = boto3.Session().client(service_name='sagemaker-runtime', region_name='ap-southeast-2')
     response = runtime.invoke_endpoint(EndpointName=endpoint, ContentType='application/x-image', Body=image)
     probs = response['Body'].read().decode() # byte array
 
@@ -40,4 +40,3 @@ def index():
        topk_categories.append((i+1, probs[i]))
 
     return {'response': str(topk_categories)}
-
