@@ -15,7 +15,7 @@ stack_name = sys.argv[3]
 commit_id = sys.argv[4]
 commit_id = commit_id[0:7]
 
-training_image = '811284229777.dkr.ecr.us-east-1.amazonaws.com/image-classification:latest'
+training_image = '544295431143.dkr.ecr.ap-southeast-2.amazonaws.com/image-classification:latest'
 timestamp = time.strftime('%Y-%m-%d-%H-%M-%S', time.gmtime())
 
 def download(url):
@@ -23,7 +23,7 @@ def download(url):
     if not os.path.exists(filename):
         wget.download(url, filename)
 
-        
+
 def upload_to_s3(channel, file):
     s3 = boto3.resource('s3')
     data = open(file, "rb")
@@ -43,7 +43,7 @@ print ("Finished Downloadng Testing Data")
 print ("Setting Algorithm Settings")
 # The algorithm supports multiple network depth (number of layers). They are 18, 34, 50, 101, 152 and 200
 # For this training, we will use 18 layers
-num_layers = "18" 
+num_layers = "18"
 # we need to specify the input image shape for the training data
 image_shape = "3,224,224"
 # we also need to specify the number of training samples in the training set
@@ -59,7 +59,7 @@ epochs = "2"
 learning_rate = "0.01"
 
 s3 = boto3.client('s3')
-# create unique job name 
+# create unique job name
 job_name = stack_name + "-" + commit_id + "-" + timestamp
 training_params = \
 {
